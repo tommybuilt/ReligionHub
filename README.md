@@ -1,77 +1,40 @@
 # ReligionCompare
 
-A citation-backed reference site for the world's religions, written for people
-who want straight answers grounded in named sources rather than a forum.
+A citation-first reference site about the world's religions, built for people who want structured, sourced answers instead of forum opinions.
 
-> Curated portfolio snapshot. This is a public snapshot of a real project built
-> and operated by TPS Worldwide LLC. Active development happens in a private
-> repository.
+## What it does
 
-## Overview
+ReligionCompare publishes per-religion profile pages, side-by-side comparisons, long-form articles, quizzes, and reference trees (sacred texts, sacred places, holidays, glossary, guides) for roughly two dozen traditions. The public reference content is authored as typed TypeScript modules, one file per religion or article, so every page renders from version-controlled source against a shared schema rather than free-form CMS entries. Behind the public site sits a small Cloudflare D1 back office for managing articles and products, capturing contact messages, and recording first-party page analytics.
 
-ReligionCompare publishes profiles for 25 traditions and 27 long-form articles,
-plus side-by-side comparisons, sacred-text and sacred-place references,
-holidays, quizzes, glossary entries, etiquette guides, educator resources, and
-beginner guides. Every claim that needs sourcing carries a numbered footnote
-tied to a citation visible to the reader. The site is content-only: no
-accounts, no community, no payments, no public API.
+## Tech stack
 
-## Features
+- Next.js 15 (App Router) and React 18, TypeScript in strict mode
+- Cloudflare: the Next app is built for Workers with OpenNext and served behind a thin Cloudflare Pages proxy worker
+- Cloudflare D1 (SQLite) for the admin, messages, and analytics tables; Cloudflare R2 as the OpenNext incremental cache
+- Tailwind CSS, Radix UI primitives, lucide-react, Recharts
+- Zod for input validation
+- A standalone Cloudflare Worker that drafts article content with the Anthropic Messages API, and a cron Worker that refreshes an affiliate product catalog into KV
 
-- **25 religion profiles** under `/religions/[slug]`, covering Christianity,
-  Islam, Hinduism, Buddhism, Judaism, Sikhism, Bahai, Jainism, Confucianism,
-  Shinto, Rastafari, Druze, Paganism, Indigenous traditions, Secular humanism,
-  and major Christian branches (Catholicism, Orthodoxy, Protestantism, Latter
-  Day Saints, Jehovah's Witnesses), among others.
-- **Side-by-side comparisons** at `/compare/[...slugs]`, with a multi-segment
-  catch-all route so any pair of traditions resolves to a real, indexable
-  comparison page.
-- **27 articles** at `/articles/[slug]`, each typed against a shared `Article`
-  schema with author, publish date, related religions, related comparisons,
-  and inline numbered citations.
-- **Reference content trees**: sacred texts, sacred places, sacred items,
-  holidays (with a calendar UI), and recommended reading, each routed per
-  slug with structured metadata.
-- **Quizzes**: alignment, demographics, ethics, history, knowledge, sacred
-  places, symbols, traditions, and a "what religion am I" assessment, all
-  routed under `/quiz/...`.
-- **Localization scaffolding**: middleware rewrites at the request edge so
-  English is canonical at `/`, with locale rewrites for `/es`, `/fr`, and
-  `/ar`. Hreflang alternates and canonical URLs are emitted centrally.
+## Key features
 
-## Stack
-
-- **Framework**: Next.js (App Router), React, TypeScript
-- **Styling**: Tailwind CSS, Radix UI primitives
-- **Icons**: Lucide
-- **Charts**: Recharts (used in demographic and history sections)
-- **Hosting**: Cloudflare Pages proxy in front of an OpenNext Cloudflare
-  Worker that runs the Next.js SSR runtime
-- **Content store**: typed TypeScript modules under
-  `src/app/religions/[slug]/content/` and `src/app/articles/content/`. There
-  is no CMS and no database in the public-facing site.
+- Citation-first content model: religion and article types carry structured `sources`, and body text uses inline numbered markers rendered into a citation drawer
+- Content as typed source: each religion and article is a TypeScript module checked against a shared interface, so a missing field is a compile error rather than a runtime failure
+- Comparison routes that resolve arbitrary tradition pairs into indexable pages, plus nine quiz types as real routes
+- A cookie-session admin panel (articles, products, messages, analytics, settings) with constant-time password checks, httpOnly secure session cookies scoped to the admin paths, and brute-force throttling
+- First-party analytics with hashed IPs and hourly de-duplication, so the project measures itself without a third-party tracker
+- A full SEO and security layer: centralized metadata, sitemap and robots routes, canonical-host and legacy-path redirects, and a security-header set in middleware
 
 ## Architecture notes
 
-- **Content is typed source, not a database**. Every religion and article is a
-  TypeScript module that exports a typed object matching a shared schema. This
-  makes the build deterministic, makes pull-request review of content changes
-  easy, and removes a whole class of runtime errors (a missing field is a
-  build error, not a 500).
-- **Citation-first writing**. Every article tracks a numbered citation list,
-  and the article body references those numbers inline. The schema makes a
-  citation an entity, not free-form text, so the site can render a footnotes
-  block, a sources list, and a "verify this claim" affordance from the same
-  data.
-- **Runtime model documented**. `ARCHITECTURE.md` walks through the request
-  flow: Cloudflare Pages proxy, OpenNext Cloudflare Worker SSR, in-repo
-  content rendering, middleware-applied security headers and canonical-host
-  redirect, and centralized SEO helpers in `src/lib/seo.ts`.
-- **No user surface to harden**. The deliberate absence of accounts, forms,
-  comments, and forms-of-engagement keeps the attack surface very small.
-  The only writes from a visitor are anonymous analytics events behind a
-  `/api/track` endpoint.
+- Two-layer Cloudflare topology: a Pages proxy worker handles the canonical-host redirect and forwards every request to the OpenNext SSR Worker, so Pages is only a thin front door and all rendering happens in the Worker.
+- The data layer is hand-rolled prepared SQL over D1 with no ORM. Admin and analytics calls degrade gracefully: if the D1 binding is absent the public pages still render and analytics return zeros, so a database issue never takes the content site down.
+- Public reference content never touches the database. It lives entirely in typed modules under the App Router tree, which keeps the read path free of database calls and makes content reviewable in pull requests.
+- The article-draft Worker is bearer-token gated and emits a ready-to-paste TypeScript module that matches the content schema, so AI assists drafting without ever writing directly to production.
 
-## License
+## Live site
 
-MIT. See [LICENSE](LICENSE).
+https://www.religioncompare.com
+
+## Status
+
+This is a public snapshot of a private working repository, captured at a point in time. It reflects the real code but omits configuration, secrets, and ongoing changes that live in the private repo. Built by tommybuilt: https://tommybuilt.dev
