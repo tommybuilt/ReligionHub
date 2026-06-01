@@ -1,0 +1,12 @@
+name = "religionhub"
+pages_build_output_dir = ".pages-proxy"
+compatibility_date = "2024-12-30"
+compatibility_flags = ["nodejs_compat"]
+
+[vars]
+SITE_NAME = "ReligionCompare"
+
+# Secrets (set via `wrangler secret put`):
+# TURNSTILE_SECRET_KEY
+# SESSION_SECRET
+# ADMIN_SETUP_KEY

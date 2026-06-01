@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 80" role="img" aria-labelledby="logoTitle logoDesc">
+  <title id="logoTitle">ReligionCompare logo</title>
+  <desc id="logoDesc">A gold and sage green emblem next to the ReligionCompare wordmark.</desc>
+  <g transform="translate(8 8)">
+    <circle cx="28" cy="32" r="24" fill="#b98a2d" />
+    <circle cx="52" cy="32" r="24" fill="#a5b77e" />
+    <path d="M20 12c-6 5-10 12-10 20s4 15 10 20c4 4 8 6 14 7c-8-7-12-16-12-27s4-20 12-27c-6 1-10 3-14 7z" fill="#93671f" />
+    <path d="M60 12c6 5 10 12 10 20s-4 15-10 20c-4 4-8 6-14 7c8-7 12-16 12-27s-4-20-12-27c6 1 10 3 14 7z" fill="#809263" />
+    <path d="M40 13c-6 5-10 12-10 19s4 14 10 19c6-5 10-12 10-19s-4-14-10-19z" fill="#f8f4ea" />
+    <path d="M39 15c3 4 5 10 5 17s-2 13-5 17" fill="none" stroke="#e2dcc7" stroke-width="1.5" stroke-linecap="round" />
+  </g>
+  <text y="50" font-size="28" font-family="Georgia, 'Times New Roman', serif" font-weight="700" letter-spacing="-0.3"><tspan x="96" fill="#1a1a1a">Religion</tspan><tspan fill="#5b6a3d">Compare</tspan></text>
+</svg>

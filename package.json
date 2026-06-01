@@ -1,0 +1,67 @@
+{
+  "name": "religion-compare",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "audit:commerce": "node scripts/audit-commerce-links.cjs",
+    "test": "vitest",
+    "test:e2e": "playwright test",
+    "db:migrate": "wrangler d1 migrations apply religioncompare-db --config wrangler.worker.toml --local",
+    "db:migrate:prod": "wrangler d1 migrations apply religioncompare-db --config wrangler.worker.toml --remote",
+    "db:seed": "wrangler d1 execute religioncompare-db --config wrangler.worker.toml --local --file=src/db/seed.sql",
+    "db:seed:prod": "wrangler d1 execute religioncompare-db --config wrangler.worker.toml --remote --file=src/db/seed.sql",
+    "build:worker:ssr": "npx opennextjs-cloudflare build",
+    "deploy:worker": "npm run build:worker:ssr && OPEN_NEXT_DEPLOY=true npx wrangler deploy --config wrangler.worker.toml",
+    "deploy:pages:proxy": "npx wrangler pages deploy .pages-proxy --project-name=religionhub --branch=main",
+    "deploy": "npm run deploy:worker && npm run deploy:pages:proxy",
+    "postinstall": "node scripts/patch-opennext.mjs"
+  },
+  "dependencies": {
+    "@radix-ui/react-accordion": "^1.2.0",
+    "@radix-ui/react-alert-dialog": "^1.1.0",
+    "@radix-ui/react-dialog": "^1.1.0",
+    "@radix-ui/react-label": "^2.1.0",
+    "@radix-ui/react-separator": "^1.1.0",
+    "@radix-ui/react-slot": "^1.1.0",
+    "@radix-ui/react-tabs": "^1.1.0",
+    "class-variance-authority": "^0.7.0",
+    "clsx": "^2.1.0",
+    "lucide-react": "^0.400.0",
+    "next": "^15.5.12",
+    "react": "^18.3.0",
+    "react-dom": "^18.3.0",
+    "recharts": "^2.12.0",
+    "tailwind-merge": "^2.3.0",
+    "tailwindcss-animate": "^1.0.7",
+    "zod": "^4.3.6"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20240512.0",
+    "@opennextjs/cloudflare": "^1.16.5",
+    "@playwright/test": "^1.44.0",
+    "@types/node": "^20.14.0",
+    "@types/react": "^18.3.0",
+    "@types/react-dom": "^18.3.0",
+    "autoprefixer": "^10.4.19",
+    "esbuild": "^0.24.2",
+    "eslint": "^8.57.0",
+    "eslint-config-next": "^14.2.15",
+    "postcss": "^8.4.38",
+    "tailwindcss": "^3.4.4",
+    "typescript": "^5.4.0",
+    "vitest": "^1.6.0",
+    "wrangler": "^4.72.0"
+  },
+  "overrides": {
+    "@opennextjs/cloudflare": {
+      "esbuild": "0.24.2"
+    },
+    "@opennextjs/aws": {
+      "esbuild": "0.24.2"
+    }
+  }
+}

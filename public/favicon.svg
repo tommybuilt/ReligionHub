@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="iconTitle iconDesc">
+  <title id="iconTitle">ReligionCompare favicon</title>
+  <desc id="iconDesc">A gold and sage green emblem used as the ReligionCompare favicon.</desc>
+  <g transform="translate(0 4)">
+    <circle cx="24" cy="28" r="24" fill="#b98a2d" />
+    <circle cx="40" cy="28" r="24" fill="#a5b77e" />
+    <path d="M16 8c-6 5-10 12-10 20s4 15 10 20c3 3 7 5 12 6c-7-6-10-14-10-26s3-20 10-26c-5 1-9 3-12 6z" fill="#93671f" />
+    <path d="M48 8c6 5 10 12 10 20s-4 15-10 20c-3 3-7 5-12 6c7-6 10-14 10-26S43 8 36 2c5 1 9 3 12 6z" fill="#809263" />
+    <path d="M32 10c-6 5-9 11-9 18s3 13 9 18c6-5 9-11 9-18s-3-13-9-18z" fill="#f8f4ea" />
+    <path d="M31 12c3 4 4 9 4 16s-1 12-4 16" fill="none" stroke="#e2dcc7" stroke-width="1.5" stroke-linecap="round" />
+  </g>
+</svg>

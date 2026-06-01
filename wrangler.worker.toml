@@ -1,0 +1,16 @@
+name = "religionhub"
+main = ".open-next/worker.js"
+compatibility_date = "2024-12-30"
+compatibility_flags = ["nodejs_compat"]
+
+[[d1_databases]]
+binding = "DB"
+database_name = "religioncompare-db"
+database_id = "b7ed19b1-2da0-4772-9a53-2533e1ba864e"
+
+[assets]
+directory = ".open-next/assets"
+binding = "ASSETS"
+
+[vars]
+SITE_NAME = "ReligionCompare"

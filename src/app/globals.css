@@ -1,0 +1,115 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 35 30% 97%;
+    --foreground: 25 20% 14%;
+    --card: 36 33% 97%;
+    --card-foreground: 25 20% 14%;
+    --popover: 36 33% 97%;
+    --popover-foreground: 25 20% 14%;
+    --primary: 25 55% 42%;
+    --primary-foreground: 40 50% 97%;
+    --secondary: 35 25% 91%;
+    --secondary-foreground: 25 20% 18%;
+    --muted: 35 20% 93%;
+    --muted-foreground: 25 10% 46%;
+    --accent: 150 25% 88%;
+    --accent-foreground: 150 30% 18%;
+    --destructive: 0 65% 50%;
+    --destructive-foreground: 40 50% 97%;
+    --border: 30 18% 87%;
+    --input: 30 18% 87%;
+    --ring: 25 55% 42%;
+    --radius: 0.75rem;
+  }
+
+  .dark {
+    --background: 25 18% 8%;
+    --foreground: 35 25% 92%;
+    --card: 25 16% 11%;
+    --card-foreground: 35 25% 92%;
+    --popover: 25 16% 11%;
+    --popover-foreground: 35 25% 92%;
+    --primary: 30 50% 55%;
+    --primary-foreground: 25 18% 8%;
+    --secondary: 25 14% 16%;
+    --secondary-foreground: 35 25% 92%;
+    --muted: 25 14% 16%;
+    --muted-foreground: 30 12% 60%;
+    --accent: 150 18% 18%;
+    --accent-foreground: 150 25% 85%;
+    --destructive: 0 55% 40%;
+    --destructive-foreground: 35 25% 92%;
+    --border: 25 14% 18%;
+    --input: 25 14% 18%;
+    --ring: 30 50% 55%;
+  }
+}
+
+@layer base {
+  html {
+    font-size: 112.5%; /* 18px base - ~12.5% increase for readability */
+    scroll-behavior: smooth;
+  }
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  }
+  h1, h2, h3 {
+    font-family: var(--font-cormorant-garamond), 'Georgia', serif;
+    letter-spacing: -0.01em;
+  }
+
+  a,
+  p,
+  li,
+  dd,
+  dt,
+  blockquote,
+  figcaption {
+    overflow-wrap: anywhere;
+  }
+
+  img,
+  video,
+  canvas {
+    max-width: 100%;
+  }
+}
+
+/* Scroll offset for anchor links - clears sticky header + tab bar */
+section[id] {
+  scroll-margin-top: 8rem;
+}
+
+ .prose :where(p, li, a, td, th, blockquote, figcaption) {
+  overflow-wrap: anywhere;
+ }
+
+ .prose table {
+  display: block;
+  width: 100%;
+  overflow-x: auto;
+ }
+
+/* Skip to content link for accessibility */
+.skip-to-content {
+  @apply sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-primary focus:text-primary-foreground focus:rounded-md;
+}
+
+/* RTL support */
+[dir="rtl"] {
+  direction: rtl;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
